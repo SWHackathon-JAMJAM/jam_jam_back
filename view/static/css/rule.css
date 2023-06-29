@@ -1,0 +1,88 @@
+.hidden {
+    display: none;
+}
+
+body {
+    height: 100vh;
+    background-image: url('../img/main.png');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#container {
+    width: 70%;
+    height: 70%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+#game-rule span:first-child {
+    display: block;
+    font-size: 30px;
+    font-style: bold;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+#ok {
+    height: 50px;
+    width: 100%;
+    display: block;
+    margin: 0 auto;
+    border: none;
+    font-size: 25px;
+    text-align: center;
+}
+
+#ok-btn:hover {
+    background-color: gray;
+    font-size: 25px;
+    color: white;
+}
+
+#game-rule-img {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+#timer {
+    width: 40%;
+    height: 90px;
+    position: absolute;
+    text-align: center;
+    background-color: gray;
+    flex-direction: column;
+    border-radius: 15px;
+    opacity: 0.8;
+}
+
+#timer span:first-child {
+    display: block;
+    padding-top: 5px;
+    color: white;
+    border-radius: 5px;
+}
+
+#timer span:last-child {
+    font-style: bold;
+    color: white;
+    font-size: 45px;
+}
+
+#ready-start {
+    font-size: 75px;
+    font-style: bold;
+    margin-top: 250px;
+}
+
+#game-result {
+    position: absolute;
+    width: 60%;
+    height: 80%;
+    margin-top: 50px;
+}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="/static/css/hands.css" />
+        <title>Document</title>
+    </head>
+    <body>
+        <div class="wrap">
+            <div class="title">어느 손으로 플레이하실 건가요?</div>
+            <div class="subtitle">클리닉이 필요한 손을 선택해주세요</div>
+            <div class="container">
+                <div id="left-hand" class="select">
+                    <div
+                        class="hand_img"
+                        style="background-image: url('/static/img/left_hand.png')"
+                    ></div>
+                    <p style="margin: 0px; margin-top: 15px">왼손</p>
+                </div>
+                <div id="right-hand" class="select">
+                    <div
+                        class="hand_img"
+                        style="background-image: url('/static/img/right_hand.png')"
+                    ></div>
+                    <p style="margin: 0px; margin-top: 15px">오른손</p>
+                </div>
+            </div>
+        </div>
+        <!--이전 selectLevel.html에서 고른 게임의 번호 등의 정보를 알고 있으면-->
+        <!--여기서 스크립트로 클릭이벤트 넣어서 게임 실행하게-->
+        <script>
+            const gameNumber = sessionStorage.getItem("gameNum");
+            console.log(typeof gameNumber);
+            const left = document.querySelector('#left-hand');
+            const right = document.querySelector('#right-hand');
+
+            function onClick() {
+                if (gameNumber === "1") {
+                    window.location.href = 'http://127.0.0.1:5000/menu/level1'
+                } else if (gameNumber === "2") {
+                    window.location.href = 'http://127.0.0.1:5000/menu/level2'
+                } else if (gameNumber === "3") {
+                    window.location.href = 'http://127.0.0.1:5000/menu/level3'
+                }
+            }
+
+            left.addEventListener('click', onClick);
+            right.addEventListener('click', onClick);         
+        </script>
+    </body>
+</html>
