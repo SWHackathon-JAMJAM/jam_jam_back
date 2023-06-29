@@ -39,12 +39,27 @@ def info():
 @menu.route("/level1")
 def level1():
     # return redirect(url_for('game.index'))
+    if not 'id' in session:
+        return redirect(url_for('web.login_name'))
+    sql = 'UPDATE game SET last_play = 1 WHERE mb_id = %s'
+    id = session['id']
+    cur.execute(sql,(id))
     return render_template('level1.html')
 
 @menu.route("/level2")
 def level2():
+    if not 'id' in session:
+        return redirect(url_for('web.login_name'))
+    sql = 'UPDATE game SET last_play = 2 WHERE mb_id = %s'
+    id = session['id']
+    cur.execute(sql,(id))
     return render_template('level2.html')
 
 @menu.route("/level3")
 def level3():
+    if not 'id' in session:
+        return redirect(url_for('web.login_name'))
+    sql = 'UPDATE game SET last_play = 3 WHERE mb_id = %s'
+    id = session['id']
+    cur.execute(sql,(id))
     return render_template('level3.html')
