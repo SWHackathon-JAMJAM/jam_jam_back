@@ -23,7 +23,12 @@
     </head>
     <body>
         <!-- <p>레벨 1 게임 페이지</p> -->
-        <div id="container"></div>
-        <img src="{{ url_for('game.video_feed') }}" width="640" height="480" />
+        <div id="container">
+            <img
+                src="{{ url_for('game.video_feed') }}"
+                width="640"
+                height="480"
+            />
+        </div>
     </body>
 </html>
