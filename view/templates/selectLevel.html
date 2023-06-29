@@ -3,12 +3,189 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/css/levels.css" />
   <title>Document</title>
 </head>
 <body>
-  <p>단계 선택 페이지</p>
-  <a href="{{url_for('menu.level1')}}"> 1단계</a>
-  <a href="{{url_for('menu.level2')}}"> 2단계</a>
-  <a href="{{url_for('menu.level3')}}"> 3단계</a>
+  <div class="container_top">
+    <div class="box" id="box1">
+      <div class="game_img" style="height: 500px; width: 250px; background-color:blue; margin-top:15px; border-radius:7.5px; background-image: url('/static/img/game_1.png'); background-size: cover;"></div>
+      <p class="game_title">벌레를 잡아라!</p>
+      <p class="game_intro">팔을 움직이고 주먹을 쥐어 <br/>벌레를 잡아보세요</p>
+    </div>
+ <div class="box" id="box2">
+      <div class="game_img" style="height: 500px; width: 250px; background-color:blue; margin-top:15px; border-radius:7.5px; background-image: url('/static/img/game_2.png'); background-size: cover;"></div>
+      <p class="game_title">벌을 피해라!</p>
+      <p class="game_intro">손가락을 향해 달려오는 벌을 <br/>손가락을 접어 피해보세요</p>
+
+    </div>    
+     <div class="box" id="box3">
+      <div class="game_img" style="height: 500px; width: 250px; background-color:blue; margin-top:15px; border-radius:7.5px; background-image: url('/static/img/game_3.png'); background-size: cover;"></div>
+      <p class="game_title">꽃을 옮겨라!</p>
+      <p class="game_intro">화면에 나온 꽃과 같은 꽃을 <br/>집어 바구니에 옮겨 담으세요</p>
+
+    </div>
+
+  </div>
+  <div class="container_bottom" style="width: 850px; ">
+    <div class="box" id="back" style="width: 280px; height:80px; margin-top:5px; margin-left:0px">뒤로</div>
+     <button id="recordButton" disabled>
+            <div class="dot-spinner">
+              <div class="dot-spinner__dot"></div>
+              <div class="dot-spinner__dot"></div>
+              <div class="dot-spinner__dot"></div>
+              <div class="dot-spinner__dot"></div>
+              <div class="dot-spinner__dot"></div>
+              <div class="dot-spinner__dot"></div>
+              <div class="dot-spinner__dot"></div>
+             <div class="dot-spinner__dot"></div>
+      </div>
+            <p style="margin-left: 20px;">듣는중...</p></button>
+
+
+  </div>
+
+  <script>
+    let recognition;
+    let recordButton;
+    let recordingStartTime;
+    let selectedBox = null;
+
+
+    // 음성인식 API 지원 여부 확인
+    if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
+      // 음성 녹음 버튼 활성화
+      recordButton = document.getElementById('recordButton');
+      recordButton.disabled = false;
+      recordButton.addEventListener('click', startRecognition);
+
+      // 음성인식 객체 생성
+      recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+      recognition.lang = 'ko-KR'; // 음성인식 언어 설정
+
+      // 음성 인식 결과 이벤트 처리
+      recognition.onresult = function(event) {
+        const result = event.results[0][0].transcript;
+        processVoiceCommand(result);
+      };
+    } else {
+      // 음성인식 API를 지원하지 않는 경우 처리
+      console.log('음성인식을 지원하지 않는 브라우저입니다.');
+    }
+
+
+    function startRecognition() {
+      
+      recognition.start();
+      recordButton.disabled = true; // 음성 녹음 버튼 비활성화
+      recordingStartTime = Date.now(); // 기록 시작 시간 저장
+      console.log('음성 녹음 버튼이 활성화되었습니다.');
+    }
+
+    // 페에지 렌더링 시 음성인식 바로 시작
+    startRecognition();
+
+
+    function resetRecognition() {
+      if (recognition && recognition.state === 'listening') {
+        recognition.stop();
+      }
+
+      recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+      recognition.lang = 'ko-KR';
+      recognition.onresult = function(event) {
+        const result = event.results[0][0].transcript;
+        processVoiceCommand(result);
+      };
+
+      recognition.start();
+      recordButton.disabled = true; // Disable the record button while starting a new recognition session
+      recordingStartTime = Date.now();
+      console.log('음성 녹음 버튼이 활성화되었습니다.');
+    }
+
+    function processVoiceCommand(command) {
+      console.log('Recognized command:', command);
+
+      const box1 = document.getElementById('box1');
+      const box2 = document.getElementById('box2');
+      const box3 = document.getElementById('box3');
+      const back = document.getElementById('back');
+      // const play = document.getElementById('play');
+
+      switch (command) {
+        case '1단계':
+        case '벌레를 잡아라':
+        case '1번':
+          selectedBox = box1;
+          selectBox(box1);
+          break;
+        case '2단계':
+        case '벌을 피해라':
+        case '2번':
+          selctedBox = box2;
+          selectBox(box2);
+          break;
+        case '3단계':
+        case '꽃을 옮겨라':
+        case '3번':
+        selectedBox = box3;
+          selectBox(box3);
+          break;
+        case '뒤로':
+          selectedBox = back;
+          selectBox(back);
+          break;
+        default:
+          recordButton.disabled = false; // 음성 녹음 버튼 다시 활성화
+          resetRecognition();
+      }
+    }
+  
+ function selectBox(box) {
+  const boxes = document.querySelectorAll('.box');
+  boxes.forEach((box) => {
+    box.style.backgroundColor = 'transparent';
+    box.style.color = '#6E5F5F';
+  });
+  
+  box.style.backgroundColor = 'white';
+  box.style.color = '#6E5F5F';
+  
+  setTimeout(() => {
+    box.click();
+  }, 2000);
+}
+    const boxes = document.querySelectorAll('.box');
+    boxes.forEach((box, index) => {
+      box.addEventListener('click', () => {
+        console.log(`Box ${index + 1} is clicked.`);
+        let gameNumber;
+
+        if (index === 0){
+          gameNumber = 1;
+          sessionStorage.setItem("gameNum", gameNumber);
+        } else if (index === 1){
+          gameNumber = 2;
+          sessionStorage.setItem("gameNum", gameNumber);
+        } else if (index === 2){
+          gameNumber = 3;
+          sessionStorage.setItem("gameNum", gameNumber);
+        } else if (index === 3){
+          window.location.href = 'info.html'
+        } 
+        window.location.href = 'http://127.0.0.1:5000/menu/handselect'
+      });
+    });
+
+    function updateRecordingTime() {
+    const currentTime = Date.now();
+    const elapsedSeconds = Math.floor((currentTime - recordingStartTime) / 1000);
+    console.log(`Recording time: ${elapsedSeconds} seconds`);
+}
+
+  setInterval(updateRecordingTime, 1000);
+
+  </script>
 </body>
 </html>
