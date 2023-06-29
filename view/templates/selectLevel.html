@@ -157,7 +157,7 @@
     box.click();
   }, 2000);
 }
-    const boxes = document.querySelectorAll('.box');
+const boxes = document.querySelectorAll('.box');
     boxes.forEach((box, index) => {
       box.addEventListener('click', () => {
         console.log(`Box ${index + 1} is clicked.`);
@@ -166,19 +166,20 @@
         if (index === 0){
           gameNumber = 1;
           sessionStorage.setItem("gameNum", gameNumber);
+          window.location.href = 'http://127.0.0.1:5000/menu/handselect'
         } else if (index === 1){
           gameNumber = 2;
           sessionStorage.setItem("gameNum", gameNumber);
+          window.location.href = 'http://127.0.0.1:5000/menu/handselect'
         } else if (index === 2){
           gameNumber = 3;
           sessionStorage.setItem("gameNum", gameNumber);
+          window.location.href = 'http://127.0.0.1:5000/menu/handselect'
         } else if (index === 3){
-          window.location.href = 'info.html'
+          window.location.href = 'http://127.0.0.1:5000/menu/info'
         } 
-        window.location.href = 'http://127.0.0.1:5000/menu/handselect'
       });
     });
-
     function updateRecordingTime() {
     const currentTime = Date.now();
     const elapsedSeconds = Math.floor((currentTime - recordingStartTime) / 1000);

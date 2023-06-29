@@ -8,7 +8,6 @@ import random
 # app = Flask(__name__)
 jam_game = Blueprint("jam_game", __name__, url_prefix="/jam_game")
 
-
 # Initialize MediaPipe hand model
 mp_hands = mp.solutions.hands
 hands = mp_hands.Hands(static_image_mode=False, max_num_hands=2, min_detection_confidence=0.5)
@@ -21,15 +20,15 @@ point_x = random.randint(0, 640)
 point_y = 0
 
 # Variables for moving the point
-move_speed_x = 20
+move_speed_x = 5
 move_direction_x = 1
-move_speed_y = 10
+move_speed_y = 5
 move_direction_y = 1
 
 # Count variables
 total_count = 0
 catch_count = 0
-move_speed_increase = 4
+move_speed_increase = 2
 
 start_time = None
 end_time = None
@@ -37,7 +36,7 @@ elapsed_time = 0
 temp_time = 5
 
 def generate_frames():
-    global point_x, point_y, move_direction_x, move_direction_y, total_count, catch_count, move_speed_y, move_speed_increase, start_time, end_time, elapsed_time, temp_time
+    global point_x, point_y, move_direction_x, move_direction_y, total_count, catch_count, move_speed_x,move_speed_y, move_speed_increase, start_time, end_time, elapsed_time, temp_time
     while True:
         # Read frame from webcam
         ret, frame = cap.read()
@@ -123,6 +122,7 @@ def generate_frames():
                                 if catch_count % 7 == 0:
                                 # Increase the move speed by 4
                                     move_speed_y += move_speed_increase
+                                    move_speed_x += move_speed_increase+1
 
         # Draw a large blue point
         cv2.circle(frame, (point_x, point_y), 20, (0, 255, 0), -1)
@@ -168,4 +168,4 @@ def video_feed():
     return Response(generate_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 # if __name__ == '__main__':
-    # app.run(debug=True)
+#     jam_game.run(debug=True)
