@@ -158,6 +158,35 @@
                     opacity: 1;
                 }
             }
+            .bar-holder {
+                width: 200px;
+                background-color: rgba(255, 255, 255, 0.2);
+                border-radius: 20px;
+                -webkit-border-radius: 20px;
+                -moz-border-radius: 20px;
+                -ms-border-radius: 20px;
+                -o-border-radius: 20px;
+                margin: 0 auto;
+                position: absolute;
+                bottom: 10%;
+                left: 30%;
+                transform: translate(-50%, -50%);
+                text-align: center;
+            }
+            .bar {
+                width: 40%;
+                background-color: white;
+                color: #fff;
+                border-radius: 20px;
+                -webkit-border-radius: 20px;
+                -moz-border-radius: 20px;
+                -ms-border-radius: 20px;
+                -o-border-radius: 20px;
+                text-align: center;
+                font-weight: 400;
+                color: black;
+                font-size: small;
+            }
         </style>
     </head>
     <body>
@@ -170,11 +199,11 @@
        -->
             <div class="container_right">
                 <div class="box" id="box1" style="margin-top: 10%">
-                    이어 하기
+                    스트레칭
                 </div>
-                <div class="box" id="box2">단계 선택</div>
+                <div class="box" id="box2">게임하기</div>
                 <div class="box" id="box3">나의 정보</div>
-                <div class="box" id="box4">설정</div>
+                <div class="box" id="box4">홈 화면</div>
                 <button id="recordButton" disabled>
                     <div class="dot-spinner">
                         <div class="dot-spinner__dot"></div>
@@ -191,17 +220,22 @@
             </div>
         </div>
         <div id="user-seed">
-            {% if level == 1 %}
+            <script>
+                console.log({{level_info}})
+            </script>
+            {% if level_info == 0 %}
             <p>&lt; {{id}} &gt; 새싹 단계</p>
-            {% elif level == 2 %}
+            {% elif level_info == 1 %}
             <p>&lt; {{id}} &gt; 줄기 단계</p>
-            {% elif level == 3 %}
+            {% elif level_info == 2 %}
             <p>&lt; {{id}} &gt; 꽃 단계</p>
             {% else %}
             <p>&lt; {{id}} &gt; 씨앗 단계</p>
             {% endif %}
-            <progress value="20" max="100"></progress>
-            <!-- <progress value="{{경험치}}" max="100"></progress> -->
+            <!--<progress value="20" max="100"></progress>-->
+            <div class="bar-holder">
+                <div class="bar" style="width:{{exp}}%;">{{exp}}/100XP</div>
+            </div>
         </div>
         <span class="hidden" style="display: none">{{last_play}}</span>
 
@@ -210,6 +244,14 @@
             let recordButton;
             let recordingStartTime;
             let selectedBox = null;
+            var level = "{{ level }}";
+
+            // 레벨에 따른 배경이미지 설정
+            if (level) {
+                var background_image = "level" + level + ".png";
+                document.body.style.backgroundImage =
+                    "url('/static/img/level_img/" + background_image + "')";
+            }
 
             // 음성인식 API 지원 여부 확인
             if (
@@ -336,4 +378,3 @@
         </script>
     </body>
 </html>
-
