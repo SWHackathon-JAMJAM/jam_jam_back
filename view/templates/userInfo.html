@@ -38,8 +38,106 @@
     </head>
     <body>
         <div style="display: flex; margin-left: 50%; margin-right: 5%">
-            <div class="box">보내기</div>
-            <div class="box">뒤로 가기</div>
+            <div class="box" id="box1">보내기</div>
+            <div class="box" id="box2">뒤로 가기</div>
         </div>
+        <script>
+            let recognition;
+            let recordButton;
+            let recordingStartTime;
+            let selectedBox = null;
+
+            // 음성인식 API 지원 여부 확인
+            if (
+                "SpeechRecognition" in window ||
+                "webkitSpeechRecognition" in window
+            ) {
+                // 음성인식 객체 생성
+                recognition = new (window.SpeechRecognition ||
+                    window.webkitSpeechRecognition)();
+                recognition.lang = "ko-KR"; // 음성인식 언어 설정
+
+                // 음성 인식 결과 이벤트 처리
+                recognition.onresult = function (event) {
+                    const result = event.results[0][0].transcript;
+                    processVoiceCommand(result);
+                };
+            } else {
+                // 음성인식 API를 지원하지 않는 경우 처리
+                console.log("음성인식을 지원하지 않는 브라우저입니다.");
+            }
+
+            function startRecognition() {
+                recognition.start();
+                recordingStartTime = Date.now(); // 기록 시작 시간 저장
+                console.log("음성 녹음 버튼이 활성화되었습니다.");
+            }
+
+            // 페에지 렌더링 시 음성인식 바로 시작
+            startRecognition();
+
+            function processVoiceCommand(command) {
+                console.log("Recognized command:", command);
+
+                const box1 = document.getElementById("box1");
+                const box2 = document.getElementById("box2");
+
+                switch (command) {
+                    case "보내기":
+                    case "1번":
+                        selectedBox = box1;
+                        selectBox(box1);
+                        break;
+                    case "뒤로":
+                    case "뒤로 가기":
+                    case "뒤로가기":
+                    case "2번":
+                        selectedBox = box2;
+                        selectBox(box2);
+                        break;
+                    default:
+                        recordButton.disabled = false; // 음성 녹음 버튼 다시 활성화
+                        startRecognition();
+                }
+            }
+
+            function selectBox(box) {
+                const boxes = document.querySelectorAll(".box");
+                boxes.forEach((box) => {
+                    box.style.backgroundColor = "transparent";
+                    box.style.color = "black";
+                });
+
+                box.style.backgroundColor = "white";
+                box.style.color = "black";
+
+                setTimeout(() => {
+                    box.click();
+                }, 2000);
+            }
+
+            const boxes = document.querySelectorAll(".box");
+            boxes.forEach((box, index) => {
+                box.addEventListener("click", () => {
+                    console.log(`Box ${index + 1} is clicked.`);
+
+                    if (index === 0) {
+                        console.log("보내기로 이동");
+                    } else if (index === 1) {
+                        window.location.href =
+                            "http://127.0.0.1:5000/menu/info";
+                    }
+                });
+            });
+            function updateRecordingTime() {
+                const currentTime = Date.now();
+                const elapsedSeconds = Math.floor(
+                    (currentTime - recordingStartTime) / 1000
+                );
+                console.log(`Recording time: ${elapsedSeconds} seconds`);
+            }
+
+            setInterval(updateRecordingTime, 1000);
+        </script>
     </body>
 </html>
