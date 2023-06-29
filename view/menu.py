@@ -28,38 +28,34 @@ def info():
     res = cur.execute(sql, (mb_id))
     if res == 0:
         return redirect(url_for('web.login_name'))
-    sql = 'SELECT level, charter,last_play FROM game WHERE mb_id = %s'
-    res = cur.execute(sql, (mb_id))
+    sql = 'SELECT mb_exp FROM game WHERE mb_id = %s'
+    cur.execute(sql, (mb_id))
     if res == 0:
         return redirect(url_for('web.login_name'))
     
-    level, charter, last_play = cur.fetchall()[0]
-    return render_template('info.html', id = mb_id, level = level, last_play = last_play)
+    res = cur.fetchall()[0]
+    if (res[0] is None):
+        exp_tmp = 0
+    else:
+        exp_tmp = res[0]
+    if exp_tmp>=1 and exp_tmp < 5: 
+        level = 1
+    elif exp_tmp >= 5 and exp_tmp <10:
+        level = 2
+    elif exp_tmp >= 10:
+        level = 3
+    else:
+        level = 0
+    return render_template('info.html', id = mb_id, exp = res[0], level = level)
 
 @menu.route("/level1")
 def level1():
-    # return redirect(url_for('game.index'))
-    if not 'id' in session:
-        return redirect(url_for('web.login_name'))
-    sql = 'UPDATE game SET last_play = 1 WHERE mb_id = %s'
-    id = session['id']
-    cur.execute(sql,(id))
     return render_template('level1.html')
 
 @menu.route("/level2")
 def level2():
-    if not 'id' in session:
-        return redirect(url_for('web.login_name'))
-    sql = 'UPDATE game SET last_play = 2 WHERE mb_id = %s'
-    id = session['id']
-    cur.execute(sql,(id))
     return render_template('level2.html')
 
 @menu.route("/level3")
 def level3():
-    if not 'id' in session:
-        return redirect(url_for('web.login_name'))
-    sql = 'UPDATE game SET last_play = 3 WHERE mb_id = %s'
-    id = session['id']
-    cur.execute(sql,(id))
     return render_template('level3.html')

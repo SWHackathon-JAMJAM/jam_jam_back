@@ -47,7 +47,7 @@ def login_pw_back():
     db.close()
     if mb_id == 'admin' and mb_pw=='1234':
         return redirect(url_for('web.admin'))
-    if tmp_pw[0] == mb_pw:
+    if str(tmp_pw[0]) == mb_pw:
         session['id'] = mb_id
         return redirect(url_for('menu.gamestart'))
     else:
