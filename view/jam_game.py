@@ -1,10 +1,12 @@
 import time
 
-from flask import Flask, render_template, Response, Blueprint
+from flask import Flask, render_template, Response, Blueprint,session
 import cv2
 import mediapipe as mp
 import random
 
+total_count = 1
+catch_count = 1
 # app = Flask(__name__)
 jam_game = Blueprint("jam_game", __name__, url_prefix="/jam_game")
 
