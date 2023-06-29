@@ -74,6 +74,11 @@ def info():
         level_info = 3   
     return render_template('info.html', id = mb_id, exp = res[0], level = level, level_info = level_info)
 
+
+@menu.route("/user_info")
+def user_info():
+    return render_template('user-info.html')
+
 @menu.route("/level1")
 def level1():
     return render_template('level1.html')
