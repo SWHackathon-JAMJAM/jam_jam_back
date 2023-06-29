@@ -48,6 +48,6 @@ def login_pw_back():
         return redirect(url_for('web.admin'))
     if tmp_pw[0] == mb_pw:
         session['id'] = mb_id
-        return redirect(url_for('game.gamestart'))
+        return redirect(url_for('menu.gamestart'))
     else:
         return redirect(url_for('web.login_name'))
