@@ -1,0 +1,17 @@
+#user-seed {
+    margin-top: 11%;
+    margin-left: 26%;
+}
+
+#user-seed p {
+    margin-bottom: 0;
+    font-size: 25px;
+    color: white;
+    text-shadow: 1px 1px 1px gray, 0 0 0.5em gray;
+}
+
+#user-seed progress {
+    height: 50px;
+    margin-left: 20px;
+}
+

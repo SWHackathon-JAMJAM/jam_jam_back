@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/css/user_seed.css" />
   <title>Document</title>
   <style>
     body {
       height: 100vh;
-      background-image: url('/static/img/main.png');
+      background-image: url('/static/img/info.jpg');
       background-position: center center;
       background-repeat: no-repeat;
       background-size: cover; 
@@ -164,9 +165,12 @@
 <body>
      <div class="wrap" >
 
+      <!-- 
       {{id}}
       {{level}}
       {{last_play}}
+      {{경험치}}
+       -->
         <div class="container_right">
          <div class="box" id="box1" style="margin-top: 10%;">이어 하기</div>
          <div class="box" id="box2">단계 선택</div>
@@ -182,14 +186,25 @@
               <div class="dot-spinner__dot"></div>
               <div class="dot-spinner__dot"></div>
              <div class="dot-spinner__dot"></div>
-      </div>
-            <p style="margin-left: 20px;">듣는중...</p></button>
-
+            </div>
+            <p style="margin-left: 20px;">듣는중...</p>
+          </button>
         </div>
      </div>
-    
-
-
+     <div id="user-seed">
+      {% if level == 1 %}
+        <p>&lt; {{id}} &gt; 새싹 단계</p>
+      {% elif level == 2 %}
+        <p>&lt; {{id}} &gt; 줄기 단계</p>
+      {% elif level == 3 %}
+        <p>&lt; {{id}} &gt; 꽃 단계</p>
+      {% else %}
+        <p>&lt; {{id}} &gt; 씨앗 단계</p>
+      {% endif %}
+      <progress value="20" max="100"></progress>
+      <!-- <progress value="{{경험치}}" max="100"></progress> -->
+    </div>
+    <span class="hidden" style="display: none;">{{last_play}}</span>
 
   <script>
     let recognition;
@@ -286,8 +301,17 @@
         console.log(`Box ${index + 1} is clicked.`);
         
         if (index === 0){
-          window.location.href = "{{level1}}";
-        } else if (index === 1){
+          const last_play = document.querySelector('.hidden');
+          if (last_play.value === 1) {
+            window.location.href = "http://127.0.0.1:5000/menu/level1";
+          } else if (last_play.value === 2) {
+            window.location.href = "http://127.0.0.1:5000/menu/level2";
+          } else if (last_play.value === 3) {
+            window.location.href = "http://127.0.0.1:5000/menu/level3";
+          } else {
+            window.location.href = "{{info}}"
+          }
+          } else if (index === 1){
           window.location.href = "http://127.0.0.1:5000/menu/gameselect"
         } else if (index === 2){
           window.location.href = "{{info}}"
