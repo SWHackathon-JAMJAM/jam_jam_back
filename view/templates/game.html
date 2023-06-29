@@ -7,58 +7,60 @@
     <link rel="stylesheet" href="/static/css/start.css" />
     <title>Document</title>
 </head>
-<body onclick="MOVETOGAME()">
+<body>
 <div>
     <div>
         <span>게임을 시작하려면 "게임 시작" 이라고 말하거나 화면을 클릭하세요</span>
     </div>
     <script>
         let recognition;
-        let recordButton;
-        let recordingStartTime;
-        function MOVETOGAME(){
-            window.location.href ='http://127.0.0.1:5000/menu/info'
+      let recordButton;
+      let recordingStartTime;
+  
+      // 음성인식 API 지원 여부 확인
+      if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {   
+        // 음성인식 객체 생성
+        recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.lang = 'ko-KR'; // 음성인식 언어 설정
+  
+        // 음성 인식 결과 이벤트 처리
+        recognition.onresult = function(event) {
+          const result = event.results[0][0].transcript;
+          processVoiceCommand(result);
+        };
+      } else {
+        // 음성인식 API를 지원하지 않는 경우 처리
+        console.log('음성인식을 지원하지 않는 브라우저입니다.');
+      }
+  
+      function startRecognition() {
+        recognition.start();
+        recordingStartTime = Date.now(); // 기록 시작 시간 저장
+      }
+  
+      // 페에지 렌더링 시 음성인식 바로 시작
+      startRecognition();
+  
+      function processVoiceCommand(command) {
+        console.log('Recognized command:', command);
+  
+        if (command === "게임시작" || command === "게임 시작") {
+          window.location = 'http://127.0.0.1:5000/menu/info';
         }
-    
-        // 음성인식 API 지원 여부 확인
-        if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {   
-          // 음성인식 객체 생성
-          recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-          recognition.lang = 'ko-KR'; // 음성인식 언어 설정
-    
-          // 음성 인식 결과 이벤트 처리
-          recognition.onresult = function(event) {
-            const result = event.results[0][0].transcript;
-            processVoiceCommand(result);
-          };
-        } else {
-          // 음성인식 API를 지원하지 않는 경우 처리
-          console.log('음성인식을 지원하지 않는 브라우저입니다.');
-        }
-    
-        function startRecognition() {
-          recognition.start();
-          recordingStartTime = Date.now(); // 기록 시작 시간 저장
-        }
-    
-        // 페에지 렌더링 시 음성인식 바로 시작
-        startRecognition();
-    
-        function processVoiceCommand(command) {
-          console.log('Recognized command:', command);
-    
-          if (command === "게임시작" || command === "게임 시작") {
-            window.location = 'info.html';
-          }
-        }
-    
-        function updateRecordingTime() {
-        const currentTime = Date.now();
-        const elapsedSeconds = Math.floor((currentTime - recordingStartTime) / 1000);
-        console.log(`Recording time: ${elapsedSeconds} seconds`);
+      }
+  
+    function updateRecordingTime() {
+      const currentTime = Date.now();
+      const elapsedSeconds = Math.floor((currentTime - recordingStartTime) / 1000);
+      console.log(`Recording time: ${elapsedSeconds} seconds`);
     }
-    
-      setInterval(updateRecordingTime, 1000);
+  
+    setInterval(updateRecordingTime, 1000);
+
+      // 화면 클릭 시 info로 이동
+      document.querySelector('body').addEventListener('click', (event) => {
+          window.location = 'http://127.0.0.1:5000/menu/info';
+      });
     
       </script>
       </div>
