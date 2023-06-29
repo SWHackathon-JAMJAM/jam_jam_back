@@ -1,34 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
-        <style>
-            body {
-                height: 100vh;
-                background-image: url("image/main.png");
-                background-position: center center;
-                background-repeat: no-repeat;
-                background-size: cover;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-            #container {
-                width: 80%;
-                height: 80%;
-            }
-        </style>
-    </head>
-    <body>
-        <!-- <p>레벨 1 게임 페이지</p> -->
-        <div id="container">
-            <img
-                src="{{ url_for('game.video_feed') }}"
-                width="640"
-                height="480"
-            />
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/css/rule.css" />
+  <link rel="stylesheet" href="/static/css/gameResult.css" />
+  <title>Document</title>
+</head>
+<body>
+  <div id="container">
+    <img src="{{ url_for('game.video_feed') }}" width="640" height="480">
+    <div id="game-rule">
+      <span>플레이 방법</span>
+      <image id="game-rule-img" src="/static/img/rule.jpg"></image>
+      <span id="ok">10초 후 자동으로 게임이 시작됩니다.</span>
+    </div>
+    <div id="timer" class="hidden">
+      <span>남은 시간</span>
+      <span>20</span>
+    </div>
+    <div id="ready-start" class="hidden">
+      <span>준비</span>
+    </div>
+    <!--게임 종료 화면-->
+    <div id="game-result" class="hidden">
+      <div class="wrap">
+        <div class="container_top">
+            <div class="section_1">
+                <div class="result">
+                    <div
+                        class="result_img"
+                        style="
+                            background-image: url('/static/img/result_img.png');
+                        "
+                    >
+                        <p class="result_value">80</p>
+                        <p class="result_percent">%</p>
+                        <div class="bar-holder">
+                            <div class="bar">40/100XP</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="section_2">
+                <div class="score">
+                    <div
+                        class="score_img"
+                        style="background-image: url('/static/img/crown.png')"
+                    ></div>
+                    <div class="jamjam_result_inner">
+                        <p
+                            style="
+                                font-size: larger;
+                                font-weight: bolder;
+                                color: #555555;
+                                margin: 0;
+                            "
+                        >
+                            반응 속도는
+                            <span
+                                style="
+                                    font-size: 40px;
+                                    margin-right: 2px;
+                                    margin-left: 5px;
+                                    font-weight: 900;
+                                "
+                                >300</span
+                            >
+                            ms 이며 <br />
+                            해당 연령대에서 상위
+                            <span
+                                style="
+                                    font-size: 40px;
+                                    margin-right: 2px;
+                                    margin-left: 5px;
+                                    font-weight: 900;
+                                "
+                                >30</span
+                            >
+                            % 에 속해요
+                        </p>
+                    </div>
+                </div>
+
+                <div class="today_jamjam">
+                    <div
+                        class="jamjam_img"
+                        style="
+                            background-image: url('/static/img/Raised_fist.png');
+                        "
+                    ></div>
+                    <div class="jamjam_result">
+                        <div class="jamjam_result_inner">
+                            <p
+                                style="
+                                    font-size: larger;
+                                    font-weight: bolder;
+                                    color: #555555;
+                                    margin: 0;
+                                "
+                            >
+                                오늘은 총
+                                <span
+                                    style="
+                                        font-size: 40px;
+                                        margin-right: 2px;
+                                        margin-left: 5px;
+                                        font-weight: 900;
+                                    "
+                                    >10</span
+                                >
+                                번 잼잼했어요
+                            </p>
+                        </div>
+                        <div class="jamjam_result_inner">
+                            <p
+                                style="
+                                    font-size: larger;
+                                    font-weight: bolder;
+                                    color: #555555;
+                                    margin: 0;
+                                "
+                            >
+                                오늘 목표까지
+                                <span
+                                    style="
+                                        font-size: 40px;
+                                        margin-right: 2px;
+                                        margin-left: 5px;
+                                        font-weight: 900;
+                                    "
+                                    >20</span
+                                >
+                                개 남았어요
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </body>
+        <div class="container_bottom">
+            <div class="box">목록으로</div>
+            <div class="box">다시하기</div>
+        </div>
+    </div>
+    </div>
+  </div>
+
+  <script src="/static/js/game.js"></script>
+</body>
 </html>
+

@@ -21,6 +21,10 @@ def gamestart():
 def gameselect():
     return render_template('selectLevel.html')
 
+@menu.route("handselect")
+def handselect():
+    return render_template('selectHand.html')
+
 @menu.route("/info")
 def info():
     mb_id = session['id']
