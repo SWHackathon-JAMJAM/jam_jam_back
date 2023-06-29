@@ -1,14 +1,413 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <p>단계 선택 페이지</p>
-  <a href="{{url_for('menu.level1')}}"> 1단계</a>
-  <a href="{{url_for('menu.level2')}}"> 2단계</a>
-  <a href="{{url_for('menu.level3')}}"> 3단계</a>
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            body {
+                height: 100vh;
+                background-image: url("image/main.png");
+                background-position: center center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                min-width: 1000px;
+                min-height: 600px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .container_top {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                margin-top: 30px;
+            }
+            .container_bottom {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+            }
+            .box {
+                width: 280px;
+                height: 350px;
+                background-color: rgba(255, 255, 255, 0.2);
+                margin-bottom: 10px;
+                color: white;
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                font-size: 30px;
+                border-radius: 7.5px;
+                margin-left: 5px;
+                margin-right: 5px;
+                margin-top: 50px;
+                box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* 그림자 효과 추가 */
+                transition: background-color 0.3s ease; /* 색 변화에 애니메이션 효과 추가 */
+            }
+            .box:hover {
+                background-color: white; /* 호버 시 배경색을 하얀색으로 변경 */
+                color: #6e5f5f; /* 호버 시 텍스트 색상을 검정색으로 변경 */
+            }
+            .box:hover .progressing {
+                background-color: #ededed;
+            }
+            .level {
+                margin: 0;
+                margin-top: 15px;
+            }
+            .game_title {
+                margin: 0;
+            }
+            .progressing {
+                width: 250px;
+                height: 20px;
+                background-color: rgba(255, 255, 255, 0.4);
+                border-radius: 10px;
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+            /* Voice Recording Button Styles */
+            #recordButton {
+                margin-top: 10px;
+                font-size: 20px;
+                padding: 10px 20px;
+                border: none;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: transparent;
+                color: black;
+            }
+            .dot-spinner {
+                --uib-size: 2.2rem;
+                --uib-speed: 0.9s;
+                --uib-color: #183153;
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                height: var(--uib-size);
+                width: var(--uib-size);
+            }
+
+            .dot-spinner__dot {
+                position: absolute;
+                top: 0;
+                left: 0;
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                height: 100%;
+                width: 100%;
+            }
+
+            .dot-spinner__dot::before {
+                content: "";
+                height: 20%;
+                width: 20%;
+                border-radius: 50%;
+                background-color: var(--uib-color);
+                transform: scale(0);
+                opacity: 0.5;
+                animation: pulse0112 calc(var(--uib-speed) * 1.111) ease-in-out
+                    infinite;
+                box-shadow: 0 0 20px rgba(18, 31, 53, 0.3);
+            }
+
+            .dot-spinner__dot:nth-child(2) {
+                transform: rotate(45deg);
+            }
+
+            .dot-spinner__dot:nth-child(2)::before {
+                animation-delay: calc(var(--uib-speed) * -0.875);
+            }
+
+            .dot-spinner__dot:nth-child(3) {
+                transform: rotate(90deg);
+            }
+
+            .dot-spinner__dot:nth-child(3)::before {
+                animation-delay: calc(var(--uib-speed) * -0.75);
+            }
+
+            .dot-spinner__dot:nth-child(4) {
+                transform: rotate(135deg);
+            }
+
+            .dot-spinner__dot:nth-child(4)::before {
+                animation-delay: calc(var(--uib-speed) * -0.625);
+            }
+
+            .dot-spinner__dot:nth-child(5) {
+                transform: rotate(180deg);
+            }
+
+            .dot-spinner__dot:nth-child(5)::before {
+                animation-delay: calc(var(--uib-speed) * -0.5);
+            }
+
+            .dot-spinner__dot:nth-child(6) {
+                transform: rotate(225deg);
+            }
+
+            .dot-spinner__dot:nth-child(6)::before {
+                animation-delay: calc(var(--uib-speed) * -0.375);
+            }
+
+            .dot-spinner__dot:nth-child(7) {
+                transform: rotate(270deg);
+            }
+
+            .dot-spinner__dot:nth-child(7)::before {
+                animation-delay: calc(var(--uib-speed) * -0.25);
+            }
+
+            .dot-spinner__dot:nth-child(8) {
+                transform: rotate(315deg);
+            }
+
+            .dot-spinner__dot:nth-child(8)::before {
+                animation-delay: calc(var(--uib-speed) * -0.125);
+            }
+
+            @keyframes pulse0112 {
+                0%,
+                100% {
+                    transform: scale(0);
+                    opacity: 0.5;
+                }
+
+                50% {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container_top">
+            <div class="box" id="box1">
+                <div
+                    class="game_img"
+                    style="
+                        height: 500px;
+                        width: 250px;
+                        background-color: blue;
+                        margin-top: 15px;
+                        border-radius: 7.5px;
+                        background-image: url('image/game_1.png');
+                        background-size: cover;
+                    "
+                ></div>
+                <p class="level">1단계</p>
+                <p class="game_title">벌레를 잡아라!</p>
+                <div class="progressing"></div>
+            </div>
+            <div class="box" id="box2">
+                <div
+                    class="game_img"
+                    style="
+                        height: 500px;
+                        width: 250px;
+                        background-color: blue;
+                        margin-top: 15px;
+                        border-radius: 7.5px;
+                        background-image: url('image/game_2.png');
+                        background-size: cover;
+                    "
+                ></div>
+                <p class="level">2단계</p>
+                <p class="game_title">벌을 피해라!</p>
+                <div class="progressing"></div>
+            </div>
+            <div class="box" id="box3">
+                <div
+                    class="game_img"
+                    style="
+                        height: 500px;
+                        width: 250px;
+                        background-color: blue;
+                        margin-top: 15px;
+                        border-radius: 7.5px;
+                        background-image: url('image/game_3.png');
+                        background-size: cover;
+                    "
+                ></div>
+                <p class="level">3단계</p>
+                <p class="game_title">꽃을 옮겨라!</p>
+                <div class="progressing"></div>
+            </div>
+        </div>
+        <div class="container_bottom" style="width: 850px">
+            <div
+                class="box"
+                id="back"
+                style="
+                    width: 280px;
+                    height: 80px;
+                    margin-top: 5px;
+                    margin-left: 0px;
+                "
+            >
+                뒤로
+            </div>
+            <button id="recordButton" disabled>
+                <div class="dot-spinner">
+                    <div class="dot-spinner__dot"></div>
+                    <div class="dot-spinner__dot"></div>
+                    <div class="dot-spinner__dot"></div>
+                    <div class="dot-spinner__dot"></div>
+                    <div class="dot-spinner__dot"></div>
+                    <div class="dot-spinner__dot"></div>
+                    <div class="dot-spinner__dot"></div>
+                    <div class="dot-spinner__dot"></div>
+                </div>
+                <p style="margin-left: 20px">듣는중...</p>
+            </button>
+        </div>
+
+        <script>
+            let recognition;
+            let recordButton;
+            let recordingStartTime;
+            let selectedBox = null;
+
+            // 음성인식 API 지원 여부 확인
+            if (
+                "SpeechRecognition" in window ||
+                "webkitSpeechRecognition" in window
+            ) {
+                // 음성 녹음 버튼 활성화
+                recordButton = document.getElementById("recordButton");
+                recordButton.disabled = false;
+                recordButton.addEventListener("click", startRecognition);
+
+                // 음성인식 객체 생성
+                recognition = new (window.SpeechRecognition ||
+                    window.webkitSpeechRecognition)();
+                recognition.lang = "ko-KR"; // 음성인식 언어 설정
+
+                // 음성 인식 결과 이벤트 처리
+                recognition.onresult = function (event) {
+                    const result = event.results[0][0].transcript;
+                    processVoiceCommand(result);
+                };
+            } else {
+                // 음성인식 API를 지원하지 않는 경우 처리
+                console.log("음성인식을 지원하지 않는 브라우저입니다.");
+            }
+
+            function startRecognition() {
+                recognition.start();
+                recordButton.disabled = true; // 음성 녹음 버튼 비활성화
+                recordingStartTime = Date.now(); // 기록 시작 시간 저장
+                console.log("음성 녹음 버튼이 활성화되었습니다.");
+            }
+
+            // 페에지 렌더링 시 음성인식 바로 시작
+            startRecognition();
+
+            function resetRecognition() {
+                if (recognition && recognition.state === "listening") {
+                    recognition.stop();
+                }
+
+                recognition = new (window.SpeechRecognition ||
+                    window.webkitSpeechRecognition)();
+                recognition.lang = "ko-KR";
+                recognition.onresult = function (event) {
+                    const result = event.results[0][0].transcript;
+                    processVoiceCommand(result);
+                };
+
+                recognition.start();
+                recordButton.disabled = true; // Disable the record button while starting a new recognition session
+                recordingStartTime = Date.now();
+                console.log("음성 녹음 버튼이 활성화되었습니다.");
+            }
+
+            function processVoiceCommand(command) {
+                console.log("Recognized command:", command);
+
+                const box1 = document.getElementById("box1");
+                const box2 = document.getElementById("box2");
+                const box3 = document.getElementById("box3");
+                const back = document.getElementById("back");
+                // const play = document.getElementById('play');
+
+                switch (command) {
+                    case "1단계":
+                    case "벌레를 잡아라":
+                    case "1번":
+                        selectedBox = box1;
+                        selectBox(box1);
+                        break;
+                    case "2단계":
+                    case "벌을 피해라":
+                    case "2번":
+                        selctedBox = box2;
+                        selectBox(box2);
+                        break;
+                    case "3단계":
+                    case "꽃을 옮겨라":
+                    case "3번":
+                        selectedBox = box3;
+                        selectBox(box3);
+                        break;
+                    case "뒤로":
+                        selectedBox = back;
+                        selectBox(back);
+                        break;
+                    default:
+                        recordButton.disabled = false; // 음성 녹음 버튼 다시 활성화
+                        resetRecognition();
+                }
+            }
+
+            function selectBox(box) {
+                const boxes = document.querySelectorAll(".box");
+                boxes.forEach((box) => {
+                    box.style.backgroundColor = "transparent";
+                    box.style.color = "#6E5F5F";
+                });
+
+                box.style.backgroundColor = "white";
+                box.style.color = "#6E5F5F";
+
+                setTimeout(() => {
+                    box.click();
+                }, 2000);
+            }
+            const boxes = document.querySelectorAll(".box");
+            boxes.forEach((box, index) => {
+                box.addEventListener("click", () => {
+                    console.log(`Box ${index + 1} is clicked.`);
+
+                    if (index === 0) {
+                        window.location.href = "level1.html";
+                    } else if (index === 1) {
+                        window.location.href = "level2.html";
+                    } else if (index === 2) {
+                        window.location.href = "level3.html";
+                    } else if (index === 3) {
+                        window.location.href = "info.html";
+                    }
+                });
+            });
+
+            function updateRecordingTime() {
+                const currentTime = Date.now();
+                const elapsedSeconds = Math.floor(
+                    (currentTime - recordingStartTime) / 1000
+                );
+                console.log(`Recording time: ${elapsedSeconds} seconds`);
+            }
+
+            setInterval(updateRecordingTime, 1000);
+        </script>
+    </body>
 </html>
