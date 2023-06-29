@@ -77,7 +77,7 @@ def info():
 
 @menu.route("/user_info")
 def user_info():
-    return render_template('user-info.html')
+    return render_template('userinfo.html')
 
 @menu.route("/level1")
 def level1():
