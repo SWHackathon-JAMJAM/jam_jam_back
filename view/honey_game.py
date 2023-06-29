@@ -5,7 +5,7 @@ import random
 import time
 
 # app = Flask(__name__)
-game = Blueprint("game", __name__, url_prefix="/game")
+honey_game = Blueprint("honey_game", __name__, url_prefix="/honey_game")
 
 # Initialize MediaPipe hand model
 mp_hands = mp.solutions.hands
@@ -177,11 +177,11 @@ def generate_frames():
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
-@game.route('/')
+@honey_game.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('honey_index.html')
 
-@game.route('/video_feed')
+@honey_game.route('/video_feed')
 def video_feed():
     return Response(generate_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 

@@ -10,7 +10,25 @@
 </head>
 <body>
   <div id="container">
-    <img src="{{ url_for('game.video_feed') }}" width="640" height="480">
+    <script>
+        window.onload = function() {
+        // 10초 뒤에 이미지 띄우는 함수 호출
+        setTimeout(showImage, 10000);
+      };
+      // 이미지 띄우는 함수
+      function showImage() {
+        // 이미지 엘리먼트 생성
+        var image = document.createElement("img");
+        // 이미지 소스 설정
+        image.src = "{{ url_for('jam_game.video_feed') }}";
+        // 이미지 스타일 설정
+        image.style.width = "640";
+        image.style.height = "480";
+        // 이미지를 화면에 추가
+        document.body.appendChild(image);
+      }
+    </script>
+    <!-- <img src="{{ url_for('jam_game.video_feed') }}" width="640" height="480"> -->
     <div id="game-rule">
       <span>플레이 방법</span>
       <image id="game-rule-img" src="/static/img/rule.jpg"></image>

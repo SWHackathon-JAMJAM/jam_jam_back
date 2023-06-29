@@ -8,7 +8,7 @@
         <style>
             body {
                 height: 100vh;
-                background-image: url("/static/img/info.jpg");
+                background-image: url("/static/img/level_img/level{{level}}.png");
                 background-position: center center;
                 background-repeat: no-repeat;
                 background-size: cover;
@@ -229,14 +229,16 @@
             <p>&lt; {{id}} &gt; 줄기 단계</p>
             {% elif level_info == 2 %}
             <p>&lt; {{id}} &gt; 꽃 단계</p>
+
             {% else %}
-            <p>&lt; {{id}} &gt; 씨앗 단계</p>
+              <p>&lt; {{id}} &gt; 씨앗 단계</p>
             {% endif %}
             <!--<progress value="20" max="100"></progress>-->
             <div class="bar-holder">
                 <div class="bar" style="width:{{exp}}%;">{{exp}}/100XP</div>
             </div>
         </div>
+
         <span class="hidden" style="display: none">{{last_play}}</span>
 
         <script>
