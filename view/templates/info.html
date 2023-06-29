@@ -191,18 +191,19 @@
             </div>
         </div>
         <div id="user-seed">
-            {% if level == 1 %}
-            <p>&lt; {{id}} &gt; 새싹 단계</p>
-            {% elif level == 2 %}
-            <p>&lt; {{id}} &gt; 줄기 단계</p>
-            {% elif level == 3 %}
-            <p>&lt; {{id}} &gt; 꽃 단계</p>
+            {% if level_info == 1 %}
+              <p>&lt; {{id}} &gt; 새싹 단계</p>
+            {% elif level_info == 2 %}
+              <p>&lt; {{id}} &gt; 줄기 단계</p>
+            {% elif level_info == 3 %}
+              <p>&lt; {{id}} &gt; 꽃 단계</p>
             {% else %}
-            <p>&lt; {{id}} &gt; 씨앗 단계</p>
+              <p>&lt; {{id}} &gt; 씨앗 단계</p>
             {% endif %}
-            <progress value="20" max="100"></progress>
+            <progress value="{{exp}}" max="100"></progress>
             <!-- <progress value="{{경험치}}" max="100"></progress> -->
-        </div>
+          </div>
+      
         <span class="hidden" style="display: none">{{last_play}}</span>
 
         <script>
