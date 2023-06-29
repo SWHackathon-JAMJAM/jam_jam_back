@@ -3,8 +3,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <script src="/static/js/user.js"></script>
-  <script src="/static/js/voice.js"></script>
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/static/css/style.css" />
   <link rel="stylesheet" href="/static/css/name.css" />
@@ -12,16 +11,15 @@
 </head>
 <body>
   <div id="login">
-    <div>
-        <form action = "{{url_for('web.login_name_back')}}" method = POST>
-            <span>이름을 입력하세요</span>
-            <input type="text" id = "id" name="id" />
-            <button type = "submit" >다음</button>
-        </form>
-    </div>
+    <span>이름을 말해주세요</span>
+    <form id="login-form" action = "{{url_for('web.login_name_back')}}" method = POST>
+        <input type="text" id = "id" name="id" />
+        <button type="submit" >다음</button>
+    </form>
     <a id="register" href="{{url_for('web.login_pw')}}">
       <span>회원가입</span>
     </a>
   </div>
+  <script src="/static/js/voice.js"></script>
 </body>
 </html>

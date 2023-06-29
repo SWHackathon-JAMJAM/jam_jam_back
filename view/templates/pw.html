@@ -9,14 +9,14 @@
 </head>
 <body>
   <div id="login">
-    <span>비밀번호를 입력하세요</span>
-    <div>
-      <form action = "{{url_for('web.login_pw_back')}}" method = POST>
-        <input type="text" id="pw" name = "pw" />
-        <button type = "submit">로그인</button>
-      </form>
-    </div>
+    <span>비밀번호을 입력하세요</span>
+    <form id="pw-form" action = "{{url_for('web.login_pw_back')}}" method = POST>
+      <input type="text" id="pw" name ="pw" />
+      <button type="submit">로그인</button>
+    </form>
   </div>
-  <script src="/static/js/user.js"></script>
+  <script>
+    
+  </script>
 </body>
 </html>
