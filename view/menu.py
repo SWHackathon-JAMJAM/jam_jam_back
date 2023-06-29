@@ -9,6 +9,7 @@ menu = Blueprint("menu", __name__, url_prefix="/menu")
 db = pymysql.connect(host=host, port=port, user=user,password=password, database=database)
 cur = db.cursor()
 
+
 @menu.route("/")
 def gamestart():
     if not 'id' in session:

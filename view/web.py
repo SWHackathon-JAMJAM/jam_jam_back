@@ -44,7 +44,6 @@ def login_pw_back():
     sql = "SELECT mb_pw FROM member WHERE mb_id = %s"
     cur.execute(sql,(mb_id))
     tmp_pw = cur.fetchall()[0]
-    db.close()
     if mb_id == 'admin' and mb_pw=='1234':
         return redirect(url_for('web.admin'))
     if str(tmp_pw[0]) == mb_pw:
