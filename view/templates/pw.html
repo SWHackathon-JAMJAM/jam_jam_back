@@ -1,4 +1,3 @@
-<!--첫 화면-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,16 +9,13 @@
 </head>
 <body>
   <div id="login">
+    <span>비밀번호를 입력하세요</span>
     <div>
-        <form action = "{{url_for('web.login_name_back')}}" method = POST>
-            <span>이름을 입력하세요</span>
-            <input type="text" id = "id" name="id" />
-            <button type = "submit" >다음</button>
-        </form>
+      <form action = "{{url_for('web.login_pw_back')}}" method = POST>
+        <input type="text" id="pw" name = "pw" />
+        <button type = "submit">로그인</button>
+      </form>
     </div>
-    <a id="register" href="{{url_for('web.login_pw')}}">
-      <span>회원가입</span>
-    </a>
   </div>
   <script src="/static/js/user.js"></script>
 </body>

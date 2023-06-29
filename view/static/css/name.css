@@ -1,0 +1,55 @@
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+#login {
+    text-align: center;
+    margin-top: 100px;
+}
+
+#login span {
+    font-size: 25px;
+    color: white;
+    text-shadow: 1px 1px 1px gray, 0 0 0.5em gray;
+}
+
+#login div {
+    padding: 20px;
+}
+
+input {
+    height: 50px;
+    width: 250px;
+    border-style: none;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: transparent;
+    border:none;
+    font-size: 25px;
+    color: white;
+    text-shadow: 1px 1px 1px gray, 0 0 0.5em gray;
+}
+#next:hover {
+    color: darkgrey;
+}
+
+#next-done:hover {
+    color: darkgrey;
+}
+
+#register {
+    position: absolute;
+    text-decoration-line: none;
+}
+
+#register span {
+    font-size: 20px;
+}

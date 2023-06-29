@@ -1,0 +1,13 @@
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+div {
+    padding-top: 100px;
+}
+span{
+    font-size: 25px;
+    color: white;
+    text-shadow: 1px 1px 1px gray, 0 0 0.5em gray;
+}

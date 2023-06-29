@@ -3,11 +3,12 @@ from view import app
 
 @app.route("/")
 def root():
-	return redirect(url_for('index'))
+	return redirect(url_for('web.login_name'))
 
-@app.route("/index")
-def index():
-	return render_template('index.html')
+# @app.route("/index")
+# def index():
+# 	return render_template('index.html')
 
 if __name__ == "__main__":
 	app.run(debug=True)
+	
