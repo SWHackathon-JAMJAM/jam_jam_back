@@ -27,16 +27,15 @@ input {
     margin-right: 10px;
     border-radius: 5px;
 }
-button {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    background-color: transparent;
-    border:none;
-    font-size: 25px;
-    color: white;
-    text-shadow: 1px 1px 1px gray, 0 0 0.5em gray;
+
+input[type=text] {
+    font-size: 30px;
 }
+
+input[type=password] {
+    font-size: 30px;
+}
+
 #next:hover {
     color: darkgrey;
 }

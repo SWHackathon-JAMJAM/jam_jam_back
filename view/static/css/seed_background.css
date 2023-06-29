@@ -1,8 +1,7 @@
-/* style.css */
 body {
     height: 100vh;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
-    background-image: url('../img/main0.jpg');
+    background-image: url('../img/main1.jpg');
 }

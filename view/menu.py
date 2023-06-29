@@ -16,6 +16,10 @@ def gamestart():
     return render_template('game.html')
 
 
+@menu.route("gameselect")
+def gameselect():
+    return render_template('selectLevel.html')
+
 @menu.route("/info")
 def info():
     mb_id = session['id']
@@ -32,14 +36,15 @@ def info():
     level, charter, last_play = cur.fetchall()[0]
     return render_template('info.html', id = mb_id, level = level, last_play = last_play)
 
-@menu.route("/bug_game")
-def bug_game():
-    return redirect(url_for('game.index'))
+@menu.route("/level1")
+def level1():
+    # return redirect(url_for('game.index'))
+    return render_template('level1.html')
 
-@menu.route("/ant")
-def ant():
-    return render_template('ant.html')
+@menu.route("/level2")
+def level2():
+    return render_template('level2.html')
 
-@menu.route("/carrot")
-def carrot():
-    return render_template('carrot.html')
+@menu.route("/level3")
+def level3():
+    return render_template('level3.html')
