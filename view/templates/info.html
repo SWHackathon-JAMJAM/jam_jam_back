@@ -4,12 +4,161 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+</head><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      height: 100vh;
+      background-image: url('/static/img/main.png');
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: cover; 
+    }
+    .container{
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: center; 
+      height: 100%;
+    }
+    .box{
+      width: 300px;
+      height: 80px;
+      background-color: rgba(255, 255, 255, 0.2);
+      margin-bottom: 10px;
+      color: white;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 30px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* 그림자 효과 추가 */
+      transition: background-color 0.3s ease; /* 색 변화에 애니메이션 효과 추가 */
+    }
+     .box:hover {
+      background-color: white; /* 호버 시 배경색을 하얀색으로 변경 */
+      color: black; /* 호버 시 텍스트 색상을 검정색으로 변경 */
+    }
+    /* Voice Recording Button Styles */
+    #recordButton {
+      margin-top: 10px;
+      font-size: 20px;
+      padding: 10px 20px;
+    }
+  </style>
+  
 </head>
 <body>
-    info
-    {{id}}
-    {{level}}
-    {{last_play}}
-    <a href = "{{url_for('game.gamestart')}}">게임하러 가기</a>
+ <div class="container">
+    <div class="box" id="box1">이어 하기</div>
+    <div class="box" id="box2">단계 선택</div>
+    <div class="box" id="box3">나의 정보</div>
+    <div class="box" id="box4">설정</div>
+    <!--
+      <button id="recordButton" disabled>음성 녹음</button>
+    -->
+
+  </div>
+
+  <script>
+    let recognition;
+    let recordButton;
+    let recordingStartTime;
+
+
+    // 음성인식 API 지원 여부 확인
+    if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
+      // 음성 녹음 버튼 활성화
+      recordButton = document.getElementById('recordButton');
+      recordButton.disabled = false;
+      recordButton.addEventListener('click', startRecognition);
+
+      // 음성인식 객체 생성
+      recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+      recognition.lang = 'ko-KR'; // 음성인식 언어 설정
+
+      // 음성 인식 결과 이벤트 처리
+      recognition.onresult = function(event) {
+        const result = event.results[0][0].transcript;
+        processVoiceCommand(result);
+      };
+    } else {
+      // 음성인식 API를 지원하지 않는 경우 처리
+      console.log('음성인식을 지원하지 않는 브라우저입니다.');
+    }
+
+    function startRecognition() {
+      recognition.start();
+      recordButton.disabled = true; // 음성 녹음 버튼 비활성화
+      recordingStartTime = Date.now(); // 기록 시작 시간 저장
+      console.log('음성 녹음 버튼이 활성화되었습니다.');
+    }
+
+    // 페에지 렌더링 시 음성인식 바로 시작
+    startRecognition();
+
+    function processVoiceCommand(command) {
+      console.log('Recognized command:', command);
+
+      const box1 = document.getElementById('box1');
+      const box2 = document.getElementById('box2');
+      const box3 = document.getElementById('box3');
+      const box4 = document.getElementById('box4');
+
+      switch (command) {
+        case '이어하기':
+        case '이어 하기':
+        case '1번':
+          box1.click();
+          break;
+        case '단계선택':
+        case '단계 선택':
+        case '2번':
+          box2.click();
+          break;
+        case '나의정보':
+        case '나의 정보':
+        case '3번':
+          box3.click();
+          break;
+        case '설정':
+        case '4번':
+          box4.click();
+          break;
+        default:
+          recordButton.disabled = false; // 음성 녹음 버튼 다시 활성화
+      }
+    }
+    const boxes = document.querySelectorAll('.box');
+    boxes.forEach((box, index) => {
+      box.addEventListener('click', () => {
+        console.log(`Box ${index + 1} is clicked.`);
+        
+        if (index === 0){
+          window.location.href = 'level1.html'
+        } else if (index === 1){
+          window.location.href = 'selectLevel.html'
+        } else if (index === 2){
+          console.log('나의 정보로 이동')
+        } else if (index === 3){
+          console.log('설정으로 이동')
+        }
+      });
+    });
+
+    function updateRecordingTime() {
+    const currentTime = Date.now();
+    const elapsedSeconds = Math.floor((currentTime - recordingStartTime) / 1000);
+    console.log(`Recording time: ${elapsedSeconds} seconds`);
+}
+
+  setInterval(updateRecordingTime, 1000);
+
+  </script>
+
 </body>
 </html>
