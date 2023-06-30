@@ -27,11 +27,40 @@
                 </div>
             </div>
         </div>
-        <!--이전 selectLevel.html에서 고른 게임의 번호 등의 정보를 알고 있으면-->
-        <!--여기서 스크립트로 클릭이벤트 넣어서 게임 실행하게-->
         <script>
+            let recognition;
+            let recordingStartTime;
+
+            // 음성인식 API 지원 여부 확인
+            if (
+                "SpeechRecognition" in window ||
+                "webkitSpeechRecognition" in window
+            ) {
+                // 음성인식 객체 생성
+                recognition = new (window.SpeechRecognition ||
+                    window.webkitSpeechRecognition)();
+                recognition.lang = "ko-KR"; // 음성인식 언어 설정
+
+                // 음성 인식 결과 이벤트 처리
+                recognition.onresult = function (event) {
+                    const result = event.results[0][0].transcript;
+                    processVoiceCommand(result);
+                };
+            } else {
+                // 음성인식 API를 지원하지 않는 경우 처리
+                console.log("음성인식을 지원하지 않는 브라우저입니다.");
+            }
+
+            function startRecognition() {
+                recognition.start();
+                recordingStartTime = Date.now(); // 기록 시작 시간 저장
+                console.log("음성 녹음 버튼이 활성화되었습니다.");
+            }
+
+            // 페에지 렌더링 시 음성인식 바로 시작
+            startRecognition();
+            
             const gameNumber = sessionStorage.getItem("gameNum");
-            console.log(typeof gameNumber);
             const left = document.querySelector('#left-hand');
             const right = document.querySelector('#right-hand');
 
@@ -46,7 +75,31 @@
             }
 
             left.addEventListener('click', onClick);
-            right.addEventListener('click', onClick);         
+            right.addEventListener('click', onClick);
+
+            function processVoiceCommand(command) {
+                console.log("Recognized command:", command);
+
+                if (command === "왼손" || command === "왼 손") {
+                    if (gameNumber === "1") {
+                        window.location.href = 'http://127.0.0.1:5000/menu/level1'
+                    } else if (gameNumber === "2") {
+                        window.location.href = 'http://127.0.0.1:5000/menu/level2'
+                    } else if (gameNumber === "3") {
+                        window.location.href = 'http://127.0.0.1:5000/menu/level3'
+                    }
+                } else if (command === "오른손" || command === "오른 손") {
+                    if (gameNumber === "1") {
+                        window.location.href = 'http://127.0.0.1:5000/menu/level1'
+                    } else if (gameNumber === "2") {
+                        window.location.href = 'http://127.0.0.1:5000/menu/level2'
+                    } else if (gameNumber === "3") {
+                        window.location.href = 'http://127.0.0.1:5000/menu/level3'
+                    }
+                } else {
+                    startRecognition();
+                }   
+            }         
         </script>
     </body>
 </html>

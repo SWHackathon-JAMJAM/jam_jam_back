@@ -27,6 +27,10 @@ def gameselect():
 def handselect():
     return render_template('selectHand.html')
 
+@menu.route("gameresult")
+def gameresult():
+    return render_template('result.html')
+
 
 @menu.route("/info")
 def info():
