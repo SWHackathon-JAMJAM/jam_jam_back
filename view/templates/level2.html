@@ -1,27 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/css/rule.css" />
+  <link rel="stylesheet" href="/static/css/gameResult.css" />
   <title>Document</title>
-  <style>
-    body {
-        height: 100vh;
-        background-image: url('image/main.png');
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-size: cover; 
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    #container {
-        width: 80%;
-        height: 80%;
-    }
-</style>
 </head>
 <body>
-  <div id="container"></div>
+  <div id="container">
+    <script>
+        window.onload = function() {
+        // 10초 뒤에 이미지 띄우는 함수 호출
+        setTimeout(showImage, 10000);
+      };
+      // 이미지 띄우는 함수
+      function showImage() {
+        // 이미지 엘리먼트 생성
+        var image = document.createElement("img");
+        // 이미지 소스 설정
+        image.src = "{{ url_for('honey_game.video_feed') }}";
+        // 이미지 스타일 설정
+        image.style.width = "640";
+        image.style.height = "480";
+        // 이미지를 화면에 추가
+        document.body.appendChild(image);
+      }
+    </script>
+    <!-- <img src="{{ url_for('jam_game.video_feed') }}" width="640" height="480"> -->
+    <div id="game-rule">
+      <span>플레이 방법</span>
+      <image id="game-rule-img" src="/static/img/rule.jpg"></image>
+      <span id="ok">10초 후 자동으로 게임이 시작됩니다.</span>
+    </div>
+    <div id="timer" class="hidden">
+      <span>남은 시간</span>
+      <span>20</span>
+    </div>
+    <div id="ready-start" class="hidden">
+      <span>준비</span>
+    </div>
+  </div>
+
+  <script src="/static/js/game.js"></script>
 </body>
 </html>
